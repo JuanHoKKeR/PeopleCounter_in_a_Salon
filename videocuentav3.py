@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import imutils
 
-cap = cv2.VideoCapture('PruebaContornos\VideoLab\Video2.mp4')
+cap = cv2.VideoCapture('VideoLab\Video2.mp4')
 
 fgbg = cv2.createBackgroundSubtractorMOG2(history=100, varThreshold=40)
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
@@ -12,6 +12,7 @@ sensores_activados = [False, False, False]
 sensores_inversos = [False, False, False] 
 contador_entrada = 0
 contador_salida = 0
+contador_sala = 0
 
 linea1 = 60
 linea2 = 100
@@ -95,7 +96,8 @@ while True:
                 contador_salida += 1
                 print(f'CONTADOR SALIDA: {contador_salida}')
                 sensores_inversos = [False, False, False]
-        
+            contador_sala = contador_entrada - contador_salida
+    
     
     #-------------------------------------------  
     cv2.drawContours(frame, [area_pts], -1, (255, 0, 255), 2)    
@@ -103,12 +105,13 @@ while True:
     cv2.line(frame, (linea2, frame.shape[0]-altura), (linea2, 120), (255, 0, 255), 1)
     cv2.line(frame, (linea3, frame.shape[0]-altura), (linea3, 120), (255, 0, 255), 1)
     
-    cv2.putText(frame, 'CONTADOR ENTRADA: ' + str(contador_entrada), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-    cv2.putText(frame, 'CONTADOR SALIDA: ' + str(contador_salida), (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, 'CONTADOR ENTRADA: ' + str(contador_entrada), (2, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, 'CONTADOR SALIDA:   ' + str(contador_salida), (2, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, 'CONTADOR SALON:   ' + str(contador_sala), (2, 45), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)    
     cv2.imshow('frame',frame)
     cv2.imshow('fgmask',fgmask) 
     
-    k= cv2.waitKey(40) & 0xFF
+    k= cv2.waitKey(1) & 0xFF
     if k == 27:
         break
 cap.release()

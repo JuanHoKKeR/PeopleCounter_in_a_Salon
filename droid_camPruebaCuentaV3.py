@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import imutils
 
-IP_ADDRESS = '192.168.205.29'
+IP_ADDRESS = 'Yoir IP Address' #This IP address is the one that appears in the DroidCam app
 URL =  'http://'+ IP_ADDRESS + ':4747/video'
 
 altura = 210
